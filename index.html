@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="test.browser.js"></script>
+    <style type="text/css">
+        button{
+            height:300px;
+            width:300px;
+        }
+    </style>
+</head>
+<body>
+    <button class="lessShit">Make Less Shit</button>
+    <button class="clickMe">Click me</button>
+    <span class="log"></span>
+    <script type="text/javascript">
+        var logElement = document.querySelector('.log');
+
+        var oldLog = console.log
+        console.log = function(){
+            oldLog.apply(console, arguments);
+
+
+
+            logElement.innerHTML += [].slice.apply(arguments) + '<br>';
+        }
+
+        var lessShit = document.querySelector('.lessShit'),
+            clickMe = document.querySelector('.clickMe'),
+            quickClickOn;
+
+        lessShit.addEventListener('click', function(){
+            if(quickClickOn){
+                quickClickOn = false;
+                window.quickClick.destroy();
+                console.log('Clicks are now slow');
+            }else{
+                quickClickOn = true;
+                window.quickClick.init();
+                console.log('Clicks are now quick');
+            }
+        });
+
+        var lastTouchStartTime;
+
+        window.addEventListener('touchstart', function(){
+            lastTouchStartTime = new Date();
+        });
+
+        clickMe.addEventListener('click', function(event){
+            console.log('Time since touchstart ' + (new Date() - lastTouchStartTime));
+            console.log(event);
+        });
+
+    </script>
+</body>
+</html>

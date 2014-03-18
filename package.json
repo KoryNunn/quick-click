@@ -1,0 +1,14 @@
+{
+  "name": "quick-click",
+  "version": "0.0.0",
+  "description": "Makes touch clicks quick",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Run the index.html page.\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "math-js": "^0.0.5"
+  }
+}
