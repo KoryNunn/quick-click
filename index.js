@@ -30,7 +30,17 @@ function endHandler(event){
             startPosition.y - touch.pageY
         );
 
-        if(time > 500 || distance > 5){
+        if(
+            time > 500 ||
+            distance > 5 ||
+            (event.target.form && (
+                event.target.tagName !== 'BUTTON' &&
+                !(
+                    event.target.tagName === 'INPUT' &&
+                    event.target.type.toLowerCase() === 'button'
+                )
+            ))
+        ){
             return;
         }
 
@@ -52,6 +62,8 @@ function endHandler(event){
            touch.relatedTarget
         );
 
+        var focusedElement = document.querySelector(':focus');
+        focusedElement && focusedElement.blur();
         event.target.dispatchEvent(virtualEvent);
     }
 }
