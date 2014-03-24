@@ -1,6 +1,7 @@
 var pythagoreanEquation = require('math-js/geometry/pythagoreanEquation');
 
-var touches = {};
+var touches = {},
+    ignoreTags = ['INPUT', 'SELECT','TEXTAREA'];
 
 function startHandler(event){
     for(var i = 0; i < event.changedTouches.length; i++){
@@ -30,16 +31,15 @@ function endHandler(event){
             startPosition.y - touch.pageY
         );
 
+        var targetTagName = event.target.tagName;
+
         if(
             time > 500 ||
             distance > 5 ||
-            (event.target.form && (
-                event.target.tagName !== 'BUTTON' &&
-                !(
-                    event.target.tagName === 'INPUT' &&
-                    event.target.type.toLowerCase() === 'button'
-                )
-            ))
+            (
+                ignoreTags.indexOf(targetTagName) >= 0 &&
+                event.target.type.toLowerCase() !== 'button'
+            )
         ){
             return;
         }

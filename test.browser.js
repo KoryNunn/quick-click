@@ -1,7 +1,8 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var pythagoreanEquation = require('math-js/geometry/pythagoreanEquation');
 
-var touches = {};
+var touches = {},
+    ignoreTags = ['INPUT', 'SELECT','TEXTAREA'];
 
 function startHandler(event){
     for(var i = 0; i < event.changedTouches.length; i++){
@@ -31,7 +32,16 @@ function endHandler(event){
             startPosition.y - touch.pageY
         );
 
-        if(time > 500 || distance > 5){
+        var targetTagName = event.target.tagName;
+
+        if(
+            time > 500 ||
+            distance > 5 ||
+            (
+                ignoreTags.indexOf(targetTagName) >= 0 &&
+                event.target.type.toLowerCase() !== 'button'
+            )
+        ){
             return;
         }
 
@@ -53,6 +63,8 @@ function endHandler(event){
            touch.relatedTarget
         );
 
+        var focusedElement = document.querySelector(':focus');
+        focusedElement && focusedElement.blur();
         event.target.dispatchEvent(virtualEvent);
     }
 }

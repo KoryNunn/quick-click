@@ -12,6 +12,10 @@
 <body>
     <button class="lessShit">Make Less Shit</button>
     <button class="clickMe">Click me</button>
+    <input></input>
+    <input type="button" value="Should accept quick clicks"></input>
+    <select></select>
+    <textarea></textarea>>
     <span class="log"></span>
     <script type="text/javascript">
         var logElement = document.querySelector('.log');
@@ -47,7 +51,7 @@
             lastTouchStartTime = new Date();
         });
 
-        clickMe.addEventListener('click', function(event){
+        window.addEventListener('click', function(event){
             console.log('Time since touchstart ' + (new Date() - lastTouchStartTime));
             console.log(event);
         });
