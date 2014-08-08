@@ -14,6 +14,10 @@ function startHandler(event){
 }
 
 function endHandler(event){
+    if (event.target.fireEvent) {
+        return;
+    }
+
     for(var i = 0; i < event.changedTouches.length; i++){
         var touch = event.changedTouches[i],
             startInfo = touches[touch.identifier],
@@ -46,9 +50,10 @@ function endHandler(event){
 
         event.preventDefault();
 
-        var virtualEvent = new MouseEvent('click');
+        //var virtualEvent = new MouseEvent('click');
+        var virtualEvent = document.createEvent( 'HTMLEvents' )
 
-        virtualEvent.initMouseEvent('click', true, true, window,
+        virtualEvent.initEvent('click', true, true, window,
            event.detail,
            touch.screenX,
            touch.screenY,
@@ -61,6 +66,7 @@ function endHandler(event){
            touch.target,
            touch.relatedTarget
         );
+        virtualEvent._quickClick = true;
 
         var focusedElement = document.querySelector(':focus');
         focusedElement && focusedElement.blur();
@@ -68,14 +74,32 @@ function endHandler(event){
     }
 }
 
+var badClick;
+function clickHandler(event){
+    if(badClick && !event._quickClick){
+        badClick = false;
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+    }
+
+    badClick = event._quickClick;
+
+    setTimeout(function(){
+        badClick = false;
+    },500);
+}
+
 module.exports = {
     init: function clickQuick(){
         touches = {};
-        window.addEventListener('touchstart', startHandler);
-        window.addEventListener('touchend', endHandler);
+        window.addEventListener('touchstart', startHandler, true);
+        window.addEventListener('touchend', endHandler, true);
+        window.addEventListener('click', clickHandler, true);
     },
     destroy:function(){
-        window.removeEventListener('touchstart', startHandler);
-        window.removeEventListener('touchend', endHandler);
+        window.removeEventListener('touchstart', startHandler, true);
+        window.removeEventListener('touchend', endHandler, true);
+        window.removeEventListener('click', clickHandler, true);
     }
 };
