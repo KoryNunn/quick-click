@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "math-js": "^0.0.5"
+    "math-js": "^1.0.0"
   }
 }
