@@ -1,6 +1,6 @@
 {
   "name": "quick-click",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Makes touch clicks quick",
   "main": "index.js",
   "scripts": {
