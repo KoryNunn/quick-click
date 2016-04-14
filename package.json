@@ -10,5 +10,14 @@
   "license": "ISC",
   "dependencies": {
     "math-js": "^1.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KoryNunn/quick-click.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/KoryNunn/quick-click/issues"
+  },
+  "homepage": "https://github.com/KoryNunn/quick-click#readme"
 }
